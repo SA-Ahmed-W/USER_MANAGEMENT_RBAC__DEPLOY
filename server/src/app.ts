@@ -3,7 +3,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import rateLimit from 'express-rate-limit';
 import { env } from './config/env';
 import { errorHandler } from './shared/middlewares/errorHandler';
 import { connectDB } from './config/db';
@@ -21,16 +20,17 @@ if (env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 15,
-  message: {
-    success: false,
-    message: 'Too many requests from this IP, please try again later',
-  },
-});
+// Rate limiting disabled for now
+// const authLimiter = rateLimit({
+//   windowMs: 15 * 60 * 1000,
+//   max: 15,
+//   message: {
+//     success: false,
+//     message: 'Too many requests from this IP, please try again later',
+//   },
+// });
 
-app.use('/api/auth', authLimiter);
+// app.use('/api/auth', authLimiter);
 
 app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });

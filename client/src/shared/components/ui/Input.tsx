@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -7,7 +7,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   showPasswordToggle?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = forwardRef<HTMLInputElement, InputProps>(({
   label,
   error,
   helperText,
@@ -16,7 +16,7 @@ export const Input: React.FC<InputProps> = ({
   className = '',
   id,
   ...props
-}) => {
+}, ref) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputType = showPasswordToggle
     ? showPassword
@@ -36,6 +36,7 @@ export const Input: React.FC<InputProps> = ({
       )}
       <div className="relative">
         <input
+          ref={ref}
           id={id}
           type={inputType}
           className={`
@@ -99,4 +100,6 @@ export const Input: React.FC<InputProps> = ({
       )}
     </div>
   );
-};
+});
+
+Input.displayName = 'Input';

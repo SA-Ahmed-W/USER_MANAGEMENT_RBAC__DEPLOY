@@ -9,7 +9,8 @@ interface UserTableProps {
   currentUserId: string;
   onView: (user: User) => void;
   onEdit: (user: User) => void;
-  onDelete: (user: User) => void;
+  onDeactivate: (user: User) => void;
+  onActivate: (user: User) => void;
 }
 
 export const UserTable: React.FC<UserTableProps> = ({
@@ -19,7 +20,8 @@ export const UserTable: React.FC<UserTableProps> = ({
   currentUserId,
   onView,
   onEdit,
-  onDelete,
+  onDeactivate,
+  onActivate,
 }) => {
   const canEdit = currentUserRole === 'admin' || currentUserRole === 'manager';
   const canDelete = currentUserRole === 'admin';
@@ -81,7 +83,8 @@ export const UserTable: React.FC<UserTableProps> = ({
                   currentUserId={currentUserId}
                   onView={onView}
                   onEdit={onEdit}
-                  onDelete={onDelete}
+                  onDeactivate={onDeactivate}
+                  onActivate={onActivate}
                   canEdit={canEdit}
                   canDelete={canDelete}
                 />

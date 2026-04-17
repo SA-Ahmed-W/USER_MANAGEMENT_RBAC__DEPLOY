@@ -10,7 +10,8 @@ interface UserTableRowProps {
   currentUserId: string;
   onView: (user: User) => void;
   onEdit: (user: User) => void;
-  onDelete: (user: User) => void;
+  onDeactivate: (user: User) => void;
+  onActivate: (user: User) => void;
   canEdit: boolean;
   canDelete: boolean;
 }
@@ -21,13 +22,15 @@ export const UserTableRow: React.FC<UserTableRowProps> = ({
   currentUserId,
   onView,
   onEdit,
-  onDelete,
+  onDeactivate,
+  onActivate,
   canEdit,
   canDelete,
 }) => {
   const isSelf = user._id === currentUserId;
   const isAdmin = user.role === 'admin';
   const canEditThisUser = canEdit && !isSelf && !(isAdmin && currentUserRole !== 'admin');
+  const canToggleStatus = canDelete && !isSelf;
 
   return (
     <tr className="hover:bg-white/10 transition-colors">
@@ -103,43 +106,49 @@ export const UserTableRow: React.FC<UserTableRowProps> = ({
             </button>
           )}
 
-          {canDelete && !isSelf && (
+          {canToggleStatus && user.status === 'active' && (
             <button
-              onClick={() => onDelete(user)}
+              onClick={() => onDeactivate(user)}
               className="p-1.5 text-silver-mist hover:text-white hover:bg-white/10 rounded-sm transition-colors"
-              title={user.status === 'active' ? 'Deactivate' : 'Activate'}
+              title="Deactivate"
             >
-              {user.status === 'active' ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
-                </svg>
-              )}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                />
+              </svg>
+            </button>
+          )}
+
+          {canToggleStatus && user.status === 'inactive' && (
+            <button
+              onClick={() => onActivate(user)}
+              className="p-1.5 text-green-400 hover:text-green-300 hover:bg-white/10 rounded-sm transition-colors"
+              title="Activate"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
             </button>
           )}
         </div>

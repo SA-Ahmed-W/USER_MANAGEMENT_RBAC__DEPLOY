@@ -83,6 +83,18 @@ export const UsersPage: React.FC = () => {
     toast.success('User deactivated successfully');
   };
 
+  const handleDeactivate = async (user: User) => {
+    await deleteUser(user._id);
+    await refetch();
+    toast.success('User deactivated');
+  };
+
+  const handleActivate = async (user: User) => {
+    await updateUser(user._id, { status: 'active' });
+    await refetch();
+    toast.success('User activated');
+  };
+
   const isAdmin = currentUser?.role === 'admin';
 
   return (
@@ -134,7 +146,8 @@ export const UsersPage: React.FC = () => {
             currentUserId={currentUser?.id || ''}
             onView={handleView}
             onEdit={handleEdit}
-            onDelete={handleDelete}
+            onDeactivate={handleDeactivate}
+            onActivate={handleActivate}
           />
 
           {totalPages > 1 && (

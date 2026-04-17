@@ -2,192 +2,179 @@
 
 A production-grade full-stack User Management System built with the MERN stack for Purple Merit Technologies.
 
-## Live Demo
-
-- **Frontend URL**: http://localhost:5173
-- **Backend API**: http://localhost:5000/api
-
 ## Tech Stack
 
 ### Backend
-- Node.js + TypeScript
+- Node.js 22 + TypeScript
 - Express.js
-- MongoDB via Mongoose (Atlas)
-- JWT (access + refresh tokens)
-- bcryptjs for password hashing
-- express-validator for validation
-- helmet for security headers
-- express-rate-limit for rate limiting
+- MongoDB via Mongoose
+- JWT with refresh token rotation
+- bcryptjs (12 rounds)
+- express-validator
+- helmet, express-rate-limit
 
 ### Frontend
 - React 18 + TypeScript
 - Vite
 - React Router v6
 - React Context + useReducer
-- Axios with interceptors
 - TailwindCSS
-- React Hot Toast
 - React Hook Form + Zod
+- React Hot Toast
 
 ## Features
 
-- **Authentication**: JWT-based auth with access/refresh tokens
+- **Authentication**: JWT-based auth with access token (in-memory) + refresh token rotation
+- **Token Security**: Refresh tokens stored in MongoDB with rotation & revocation, sent via httpOnly cookies
 - **Role-Based Access Control (RBAC)**: Admin, Manager, User roles
-- **User Management**: CRUD operations with soft delete
-- **Audit Trails**: Track user creation and updates
-- **Profile Management**: Users can update their own profiles
-- **Dashboard**: Role-based dashboard views
+- **User Management**: Full CRUD operations with soft delete (deactivation)
+- **Audit Trails**: Track createdBy/updatedBy for all changes
+- **Profile Management**: Users can view and update their profiles
+- **Dashboard**: Role-specific dashboard views (Admin, Manager, User)
+- **Security**: Rate limiting, input validation, CORS, helmet headers
+- **Responsive**: Mobile, tablet, and desktop layouts
 
-## Prerequisites
+## Quick Start
 
-- Node.js 18+ installed
-- MongoDB Atlas account (or local MongoDB)
+### Prerequisites
+- Node.js 18+
+- MongoDB (local or Atlas)
 - npm or yarn
 
-## Environment Setup
+### Environment Setup
 
-### Server
-
+**Server:**
 ```bash
 cd server
 cp .env.example .env
 ```
 
-Update `.env` with your values:
-
+Update `.env`:
 ```env
 PORT=5000
 NODE_ENV=development
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/usermgmt
-JWT_ACCESS_SECRET=your_access_secret_here
-JWT_REFRESH_SECRET=your_refresh_secret_here
+MONGO_URI=mongodb://localhost:27017/usermgmt
+JWT_ACCESS_SECRET=your-access-secret-key-min-32-characters
+JWT_REFRESH_SECRET=your-refresh-secret-key-min-32-characters
 CLIENT_ORIGIN=http://localhost:5173
 ```
 
-### Client
-
+**Client:**
 ```bash
 cd client
 cp .env.example .env
 ```
 
 Update `.env`:
-
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
 
-## Installation
-
-### Server
+### Installation
 
 ```bash
+# Server
 cd server
 npm install
-```
 
-### Client
-
-```bash
+# Client
 cd client
 npm install
 ```
 
-## Running Locally
-
-### First Time Setup
-
-Seed the database with initial users:
+### Running Locally
 
 ```bash
-cd server
-npm run seed
+# Seed database (first time only)
+cd server && npm run seed
+
+# Start server
+cd server && npm run dev
+
+# Start client (new terminal)
+cd client && npm run dev
 ```
 
-### Start the Server
+### Seeded Credentials
 
-```bash
-cd server
-npm run dev
-```
-
-### Start the Client
-
-```bash
-cd client
-npm run dev
-```
-
-## Seeded Credentials
-
-| Role    | Email                      | Password    |
-|---------|----------------------------|-------------|
-| Admin   | admin@purplemerit.com      | Admin@123   |
-| Manager | manager@purplemerit.com    | Manager@123 |
-| User    | user1@example.com          | User@123    |
-| User    | user2@example.com          | User@123    |
-| User    | user3@example.com          | User@123    |
+| Role    | Email                     | Password   |
+|---------|---------------------------|------------|
+| Admin   | admin@purplemerit.com     | Admin@123  |
+| Manager | manager@purplemerit.com   | Manager@123|
+| User    | user1@example.com         | User@123   |
 
 ## API Endpoints
 
 ### Authentication
-
-| Method | Endpoint           | Description          |
-|--------|--------------------|----------------------|
-| POST   | /api/auth/login    | Login user           |
-| POST   | /api/auth/refresh  | Refresh access token|
-| POST   | /api/auth/logout   | Logout user         |
+| Method | Endpoint         | Description                |
+|--------|------------------|----------------------------|
+| POST   | /api/auth/register | Register new user        |
+| POST   | /api/auth/login  | Login (sets httpOnly cookie) |
+| POST   | /api/auth/refresh | Get new access token     |
+| POST   | /api/auth/logout | Logout (revokes token)   |
 
 ### Users
+| Method | Endpoint         | Description                    | Access        |
+|--------|------------------|--------------------------------|---------------|
+| GET    | /api/users       | Get all users (paginated)      | Admin, Manager|
+| POST   | /api/users       | Create new user                | Admin only    |
+| GET    | /api/users/me    | Get own profile               | All roles     |
+| PUT    | /api/users/me    | Update own profile            | All roles     |
+| GET    | /api/users/stats | Get user statistics           | Admin         |
+| GET    | /api/users/:id   | Get user by ID                | Admin, Manager|
+| PUT    | /api/users/:id   | Update user                   | Admin, Manager|
+| DELETE | /api/users/:id   | Deactivate user               | Admin only    |
 
-| Method | Endpoint           | Description                    | Auth Required        |
-|--------|--------------------|--------------------------------|----------------------|
-| GET    | /api/users         | Get all users                  | Admin, Manager       |
-| POST   | /api/users         | Create new user                | Admin only           |
-| GET    | /api/users/me      | Get own profile                | All roles            |
-| PUT    | /api/users/me      | Update own profile            | All roles            |
-| GET    | /api/users/:id     | Get user by ID                 | Admin, Manager       |
-| PUT    | /api/users/:id     | Update user                    | Admin, Manager       |
-| DELETE | /api/users/:id     | Deactivate user (soft delete)  | Admin only           |
-
-## Folder Structure
+## Architecture
 
 ```
-/
-├── client/
-│   ├── src/
-│   │   ├── features/
-│   │   │   ├── auth/
-│   │   │   ├── users/
-│   │   │   ├── profile/
-│   │   │   └── dashboard/
-│   │   ├── shared/
-│   │   │   ├── components/
-│   │   │   ├── hooks/
-│   │   │   └── utils/
-│   │   ├── context/
-│   │   └── routes/
-│   └── package.json
-│
-├── server/
-│   ├── src/
-│   │   ├── config/
-│   │   ├── features/
-│   │   │   ├── auth/
-│   │   │   └── users/
-│   │   └── shared/
-│   │       ├── constants/
-│   │       ├── middlewares/
-│   │       ├── types/
-│   │       └── utils/
-│   └── package.json
-│
-└── README.md
+client/                     # React frontend
+├── src/
+│   ├── features/          # Feature-based modules
+│   │   ├── auth/          # Login, Register
+│   │   ├── users/         # User CRUD
+│   │   ├── profile/       # Profile management
+│   │   └── dashboard/     # Role-specific dashboards
+│   ├── shared/            # Reusable components, hooks, utils
+│   ├── context/           # Auth context (state management)
+│   └── routes/            # Route definitions
+└── package.json
+
+server/                     # Express backend
+├── src/
+│   ├── config/            # DB, env config
+│   ├── features/          # Feature modules
+│   │   ├── auth/          # Auth service, controller, routes, refresh token model
+│   │   └── users/        # User model, service, controller, routes
+│   └── shared/            # Middlewares, utils, types, constants
+└── package.json
 ```
 
-## Deployment Notes
+## Security Features
 
-### Build for Production
+1. **Passwords**: bcrypt hashed (12 rounds)
+2. **Access Token**: 15 minutes expiry, stored in-memory (React state)
+3. **Refresh Token**: 7 days expiry, stored in MongoDB, sent via httpOnly cookie
+4. **Token Rotation**: Old refresh token revoked, new one issued on each refresh
+5. **Rate Limiting**: 10 requests/15 minutes on auth endpoints
+6. **CORS**: Restricted to configured CLIENT_ORIGIN
+7. **Helmet**: Security headers enabled
+8. **Input Validation**: express-validator on all endpoints
+9. **Soft Delete**: Users deactivated, not deleted
+
+## Testing
+
+```bash
+# Server tests
+cd server
+npm test           # Run tests
+npm run test:watch # Watch mode
+npm run test:coverage # With coverage
+```
+
+## Deployment
+
+### Build
 
 **Server:**
 ```bash
@@ -200,20 +187,25 @@ npm start
 ```bash
 cd client
 npm run build
-npm run preview
 ```
 
-### Security Features
+### Production Environment Variables
 
-1. Passwords hashed with bcrypt (salt rounds: 12)
-2. JWT access tokens expire in 15 minutes
-3. Refresh tokens expire in 7 days (httpOnly cookies)
-4. Rate limiting on auth routes (10 req/15 min per IP)
-5. CORS restricted to configured origin
-6. Helmet security headers enabled
-7. Input validation on all endpoints
-8. Passwords never returned in API responses
+**Server (Render):**
+```
+PORT=5000
+NODE_ENV=production
+MONGO_URI=<mongodb-connection-string>
+JWT_ACCESS_SECRET=<strong-secret>
+JWT_REFRESH_SECRET=<strong-secret>
+CLIENT_ORIGIN=https://your-netlify-app.netlify.app
+```
 
-### Environment Variables
+**Client (Netlify):**
+```
+VITE_API_URL=https://your-render-app.onrender.com/api
+```
 
-Never commit `.env` files to version control. Always use `.env.example` as a template.
+## License
+
+MIT
