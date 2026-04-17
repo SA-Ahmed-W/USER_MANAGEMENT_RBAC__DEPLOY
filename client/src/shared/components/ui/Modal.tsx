@@ -39,25 +39,25 @@ export const Modal: React.FC<ModalProps> = ({
   if (!isOpen) return null;
 
   const sizeStyles = {
-    sm: 'max-w-md',
+    sm: 'max-w-sm',
     md: 'max-w-lg',
     lg: 'max-w-2xl',
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
         className="absolute inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
       <div
-        className={`relative bg-velvet-black border border-silver-mist w-full mx-4 ${sizeStyles[size]} transform transition-all animate-in fade-in zoom-in-95 duration-200`}
+        className={`relative bg-velvet-black border border-silver-mist w-full ${sizeStyles[size]} transform transition-all animate-in fade-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto`}
       >
-        <div className="flex items-center justify-between px-6 py-4 border-b border-silver-mist/30">
-          <h2 className="font-display text-body text-white uppercase">{title}</h2>
+        <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-silver-mist/30">
+          <h2 className="font-display text-sm sm:text-body text-white uppercase">{title}</h2>
           <button
             onClick={onClose}
-            className="text-silver-mist hover:text-white transition-colors"
+            className="text-silver-mist hover:text-white transition-colors p-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ export const Modal: React.FC<ModalProps> = ({
             </svg>
           </button>
         </div>
-        <div className="px-6 py-6">{children}</div>
+        <div className="px-4 sm:px-6 py-4 sm:py-6">{children}</div>
       </div>
     </div>
   );

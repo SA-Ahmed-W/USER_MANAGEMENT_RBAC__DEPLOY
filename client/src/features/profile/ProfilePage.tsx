@@ -21,7 +21,7 @@ export const ProfilePage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex items-center justify-center min-h-[300px] sm:min-h-[400px]">
         <Spinner size="lg" />
       </div>
     );
@@ -29,60 +29,60 @@ export const ProfilePage: React.FC = () => {
 
   if (!profile) {
     return (
-      <div className="text-center py-12">
-        <p className="font-body text-silver-mist">Failed to load profile. Please try logging in again.</p>
+      <div className="text-center py-8 sm:py-12">
+        <p className="font-body text-sm sm:text-body text-silver-mist">Failed to load profile. Please try logging in again.</p>
       </div>
     );
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-12">
+    <div className="max-w-2xl mx-auto space-y-6 sm:space-y-12">
       <div>
-        <h1 className="font-display text-display text-white mb-3">
+        <h1 className="font-display text-xl sm:text-2xl md:text-display text-white mb-2 sm:mb-3">
           MY PROFILE
         </h1>
-        <p className="font-body text-body text-silver-mist">
+        <p className="font-body text-sm sm:text-body text-silver-mist">
           Manage your account information
         </p>
       </div>
 
-      <div className="border border-silver-mist p-6">
-        <div className="flex items-center gap-4 pb-6 border-b border-silver-mist/30">
+      <div className="border border-silver-mist p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 pb-4 sm:pb-6 border-b border-silver-mist/30">
           <Avatar name={profile.name} size="lg" />
           <div>
-            <h2 className="font-display text-body text-white">{profile.name}</h2>
-            <p className="font-body text-compact text-silver-mist">{profile.email}</p>
-            <div className="flex gap-2 mt-3">
-              <Badge variant={profile.role as 'admin' | 'manager' | 'user'}>
+            <h2 className="font-display text-base sm:text-body text-white">{profile.name}</h2>
+            <p className="font-body text-xs sm:text-compact text-silver-mist">{profile.email}</p>
+            <div className="flex gap-2 mt-2 sm:mt-3">
+              <Badge variant={profile.role as 'admin' | 'manager' | 'user'} size="sm">
                 {profile.role}
               </Badge>
-              <Badge variant={profile.status === 'active' ? 'active' : 'inactive'}>
+              <Badge variant={profile.status === 'active' ? 'active' : 'inactive'} size="sm">
                 {profile.status}
               </Badge>
             </div>
           </div>
         </div>
 
-        <div className="py-8 space-y-4">
-          <h3 className="font-mono text-caption uppercase tracking-widest text-silver-mist">
+        <div className="py-4 sm:py-8 space-y-4">
+          <h3 className="font-mono text-micro sm:text-caption uppercase tracking-widest text-silver-mist">
             Account Information
           </h3>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <p className="font-mono text-micro uppercase tracking-widest text-silver-mist mb-1">Email</p>
-              <p className="font-body text-body text-white">{profile.email}</p>
+              <p className="font-body text-sm sm:text-body text-white">{profile.email}</p>
             </div>
             <div>
               <p className="font-mono text-micro uppercase tracking-widest text-silver-mist mb-1">Role</p>
-              <p className="font-body text-body text-white capitalize">{profile.role}</p>
+              <p className="font-body text-sm sm:text-body text-white capitalize">{profile.role}</p>
             </div>
             <div>
               <p className="font-mono text-micro uppercase tracking-widest text-silver-mist mb-1">Status</p>
-              <p className="font-body text-body text-white capitalize">{profile.status}</p>
+              <p className="font-body text-sm sm:text-body text-white capitalize">{profile.status}</p>
             </div>
             <div>
               <p className="font-mono text-micro uppercase tracking-widest text-silver-mist mb-1">Member Since</p>
-              <p className="font-body text-body text-white">
+              <p className="font-body text-sm sm:text-body text-white">
                 {profile.createdAt ? formatDate(profile.createdAt) : '-'}
               </p>
             </div>
@@ -90,8 +90,8 @@ export const ProfilePage: React.FC = () => {
         </div>
       </div>
 
-      <div className="border border-silver-mist p-6">
-        <h3 className="font-display text-body text-white uppercase mb-6">Edit Profile</h3>
+      <div className="border border-silver-mist p-4 sm:p-6">
+        <h3 className="font-display text-sm sm:text-body text-white uppercase mb-4 sm:mb-6">Edit Profile</h3>
         <ProfileForm
           name={profile.name}
           onSubmit={handleSubmit}

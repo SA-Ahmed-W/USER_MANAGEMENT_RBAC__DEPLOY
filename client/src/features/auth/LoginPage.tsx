@@ -35,22 +35,22 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-velvet-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-velvet-black flex items-center justify-center p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <h1 className="font-display text-section text-showroom-white mb-3">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-section text-showroom-white mb-2 sm:mb-3">
             PURPLE MERIT
           </h1>
-          <p className="font-body text-body text-silver-mist">
+          <p className="font-body text-sm sm:text-body text-silver-mist">
             User Management System
           </p>
         </div>
 
-        <div className="border border-silver-mist rounded-sm p-8 bg-black">
-          <h2 className="font-display text-display text-showroom-white mb-2 text-center">
+        <div className="border border-silver-mist rounded-sm p-6 sm:p-8 bg-black">
+          <h2 className="font-display text-xl sm:text-2xl md:text-display text-showroom-white mb-2 text-center">
             SIGN IN
           </h2>
-          <p className="font-body text-body text-silver-mist mb-8 text-center">
+          <p className="font-body text-sm sm:text-body text-silver-mist mb-6 sm:mb-8 text-center">
             Access your account
           </p>
 
@@ -60,25 +60,25 @@ export const LoginPage: React.FC = () => {
             <p className="font-mono text-micro text-silver-mist text-center mb-4 uppercase tracking-widest">
               Quick Fill (Testing)
             </p>
-            <div className="flex gap-3 justify-center">
+            <div className="flex gap-2 sm:gap-3 justify-center flex-wrap">
               <button
                 type="button"
                 onClick={() => handleQuickFill('admin')}
-                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all"
+                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-3 sm:px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all text-xs sm:text-sm"
               >
                 Admin
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickFill('manager')}
-                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all"
+                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-3 sm:px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all text-xs sm:text-sm"
               >
                 Manager
               </button>
               <button
                 type="button"
                 onClick={() => handleQuickFill('user')}
-                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all"
+                className="font-mono text-button-sm uppercase tracking-widest border border-white text-white px-3 sm:px-4 py-2 rounded-pill hover:bg-white hover:text-black transition-all text-xs sm:text-sm"
               >
                 User
               </button>
@@ -86,14 +86,14 @@ export const LoginPage: React.FC = () => {
           </div>
         </div>
 
-        <p className="text-center mt-8 font-mono text-caption text-silver-mist">
+        <p className="text-center mt-6 sm:mt-8 font-mono text-caption text-silver-mist">
           Don't have an account?{' '}
           <Link to="/register" className="text-white hover:opacity-75 transition-opacity uppercase">
             Register
           </Link>
         </p>
 
-        <p className="text-center text-xs text-silver-mist mt-6 font-mono tracking-widest uppercase">
+        <p className="text-center text-xs text-silver-mist mt-4 sm:mt-6 font-mono tracking-widest uppercase">
           Purple Merit Technologies
         </p>
       </div>

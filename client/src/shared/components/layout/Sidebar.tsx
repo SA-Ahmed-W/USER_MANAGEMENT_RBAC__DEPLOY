@@ -99,30 +99,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex items-center gap-3 px-6 py-5 border-b border-silver-mist/30">
-            <div className="w-10 h-10 bg-white rounded-sm flex items-center justify-center">
-              <span className="text-black font-display text-lg">PM</span>
+          <div className="flex items-center gap-3 px-4 sm:px-6 py-4 sm:py-5 border-b border-silver-mist/30">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-sm flex items-center justify-center">
+              <span className="text-black font-display text-sm sm:text-lg">PM</span>
             </div>
             <div>
-              <h1 className="font-display text-body text-white tracking-wide">PURPLE MERIT</h1>
-              <p className="text-xs text-silver-mist font-mono uppercase tracking-widest">Management</p>
+              <h1 className="font-display text-xs sm:text-body text-white tracking-wide">PURPLE MERIT</h1>
+              <p className="text-[10px] sm:text-xs text-silver-mist font-mono uppercase tracking-widest">Management</p>
             </div>
           </div>
 
-          <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+          <nav className="flex-1 px-3 sm:px-4 py-4 sm:py-6 space-y-1 overflow-y-auto">
             {filteredLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-sm text-sm font-mono uppercase tracking-widest transition-all duration-200 ${
+                className={`flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 sm:py-2.5 rounded-sm text-xs sm:text-sm font-mono uppercase tracking-widest transition-all duration-200 ${
                   location.pathname === link.to
                     ? 'bg-white text-black'
                     : 'text-white hover:bg-white/10'
                 }`}
               >
-                {link.icon}
-                <span className="flex-1">{link.label}</span>
+                <span className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0">{link.icon}</span>
+                <span className="flex-1 truncate">{link.label}</span>
                 {link.adminOnly && (
                   <Badge variant="admin" size="sm">
                     Admin
@@ -133,11 +133,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           </nav>
 
           {user && (
-            <div className="px-4 py-4 border-t border-silver-mist/30">
-              <div className="flex items-center gap-3 px-3 py-2">
-                <Avatar name={user.name} size="md" />
+            <div className="px-3 sm:px-4 py-3 sm:py-4 border-t border-silver-mist/30">
+              <div className="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2">
+                <Avatar name={user.name} size="sm" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-body text-white truncate">
+                  <p className="text-xs sm:text-sm font-body text-white truncate">
                     {user.name}
                   </p>
                   <Badge variant={user.role as 'admin' | 'manager' | 'user'} size="sm">

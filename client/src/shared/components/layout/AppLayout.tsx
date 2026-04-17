@@ -13,7 +13,7 @@ export const AppLayout: React.FC = () => {
       <div className="lg:pl-64">
         <Topbar onMenuClick={() => setIsSidebarOpen(true)} />
 
-        <main className="p-4 md:p-8">
+        <main className="p-3 sm:p-4 md:p-6 lg:p-8">
           <Outlet />
         </main>
       </div>

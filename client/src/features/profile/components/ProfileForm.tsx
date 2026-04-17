@@ -64,7 +64,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4 sm:space-y-6">
       <Input
         label="Name"
         placeholder="Enter your name"
@@ -81,8 +81,8 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
           Change Password
         </Button>
       ) : (
-        <div className="space-y-6 p-6 border border-silver-mist rounded-sm">
-          <h4 className="font-display text-body text-white uppercase">Change Password</h4>
+        <div className="space-y-4 sm:space-y-6 p-4 sm:p-6 border border-silver-mist rounded-sm">
+          <h4 className="font-display text-sm sm:text-body text-white uppercase">Change Password</h4>
           
           <Input
             label="Current Password"
@@ -111,7 +111,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
             {...register('confirmPassword')}
           />
 
-          <div className="flex gap-4">
+          <div className="flex gap-3 sm:gap-4">
             <Button
               type="button"
               variant="ghost"

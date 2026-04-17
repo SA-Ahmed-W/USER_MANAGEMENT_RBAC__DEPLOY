@@ -5,7 +5,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://zoryn-bkend-assessment-fintrack-deploy.onrender.com/api/:splat"
+  to = "https://user-management-rbac-deploy.onrender.com/api/:splat"
   status = 200
   force = true
 

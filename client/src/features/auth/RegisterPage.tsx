@@ -27,36 +27,36 @@ export const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-velvet-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-velvet-black flex items-center justify-center p-4 sm:p-6 md:p-8">
       <div className="w-full max-w-md">
-        <div className="text-center mb-10">
-          <h1 className="font-display text-section text-showroom-white mb-3">
+        <div className="text-center mb-8 sm:mb-10">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-section text-showroom-white mb-2 sm:mb-3">
             PURPLE MERIT
           </h1>
-          <p className="font-body text-body text-silver-mist">
+          <p className="font-body text-sm sm:text-body text-silver-mist">
             User Management System
           </p>
         </div>
 
-        <div className="border border-silver-mist rounded-sm p-8 bg-black">
-          <h2 className="font-display text-display text-showroom-white mb-2 text-center">
+        <div className="border border-silver-mist rounded-sm p-6 sm:p-8 bg-black">
+          <h2 className="font-display text-xl sm:text-2xl md:text-display text-showroom-white mb-2 text-center">
             REGISTER
           </h2>
-          <p className="font-body text-body text-silver-mist mb-8 text-center">
+          <p className="font-body text-sm sm:text-body text-silver-mist mb-6 sm:mb-8 text-center">
             Create your account
           </p>
 
           <RegisterForm onSubmit={handleRegister} isLoading={isLoading} />
         </div>
 
-        <p className="text-center mt-8 font-mono text-caption text-silver-mist">
+        <p className="text-center mt-6 sm:mt-8 font-mono text-caption text-silver-mist">
           Already have an account?{' '}
           <Link to="/login" className="text-white hover:opacity-75 transition-opacity uppercase">
             Sign In
           </Link>
         </p>
 
-        <p className="text-center text-xs text-silver-mist mt-6 font-mono tracking-widest uppercase">
+        <p className="text-center text-xs text-silver-mist mt-4 sm:mt-6 font-mono tracking-widest uppercase">
           Purple Merit Technologies
         </p>
       </div>

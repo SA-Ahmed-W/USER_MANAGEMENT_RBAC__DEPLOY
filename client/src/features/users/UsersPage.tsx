@@ -86,18 +86,18 @@ export const UsersPage: React.FC = () => {
   const isAdmin = currentUser?.role === 'admin';
 
   return (
-    <div className="space-y-12">
-      <div className="flex items-center justify-between">
+    <div className="space-y-6 sm:space-y-12">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-display text-display text-white mb-3">
+          <h1 className="font-display text-xl sm:text-2xl md:text-display text-white mb-2 sm:mb-3">
             USER MANAGEMENT
           </h1>
-          <p className="font-body text-body text-silver-mist">
+          <p className="font-body text-sm sm:text-body text-silver-mist">
             Manage and view all users
           </p>
         </div>
         {isAdmin && (
-          <Button onClick={() => setIsCreateOpen(true)}>
+          <Button onClick={() => setIsCreateOpen(true)} className="w-full sm:w-auto">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5 mr-2"
@@ -117,12 +117,12 @@ export const UsersPage: React.FC = () => {
         )}
       </div>
 
-      <div className="border border-silver-mist p-4">
+      <div className="border border-silver-mist p-3 sm:p-4">
         <UserFilters onFiltersChange={handleFiltersChange} />
       </div>
 
       {isLoading ? (
-        <div className="border border-silver-mist p-12">
+        <div className="border border-silver-mist p-8 sm:p-12">
           <Spinner size="lg" />
         </div>
       ) : (
