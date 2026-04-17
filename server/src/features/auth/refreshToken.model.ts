@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
 
-export interface IRefreshToken extends Document {
+export interface IRefreshToken {
   userId: mongoose.Types.ObjectId;
   token: string;
   expiresAt: Date;
@@ -8,14 +8,7 @@ export interface IRefreshToken extends Document {
   revoked: boolean;
 }
 
-interface IRefreshTokenMethods {
-  isExpired(): boolean;
-  isRevoked(): boolean;
-}
-
-type RefreshTokenModel = Model<IRefreshToken, {}, IRefreshTokenMethods>;
-
-const refreshTokenSchema = new Schema<IRefreshToken, RefreshTokenModel, IRefreshTokenMethods>(
+const refreshTokenSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
@@ -31,7 +24,6 @@ const refreshTokenSchema = new Schema<IRefreshToken, RefreshTokenModel, IRefresh
     expiresAt: {
       type: Date,
       required: true,
-      index: { expireAfter: 0 },
     },
     revoked: {
       type: Boolean,
@@ -43,12 +35,14 @@ const refreshTokenSchema = new Schema<IRefreshToken, RefreshTokenModel, IRefresh
   }
 );
 
+refreshTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+
 refreshTokenSchema.methods.isExpired = function (): boolean {
-  return new Date() > this.expiresAt;
+  return new Date() > (this as IRefreshToken).expiresAt;
 };
 
 refreshTokenSchema.methods.isRevoked = function (): boolean {
-  return this.revoked;
+  return (this as IRefreshToken).revoked;
 };
 
-export const RefreshToken = mongoose.model<IRefreshToken, RefreshTokenModel>('RefreshToken', refreshTokenSchema);
+export const RefreshToken = mongoose.model<IRefreshToken>('RefreshToken', refreshTokenSchema);

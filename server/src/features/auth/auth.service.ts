@@ -61,16 +61,16 @@ const validateRefreshToken = async (refreshToken: string): Promise<IRefreshToken
     throw new AppError('Refresh token has been revoked', 401);
   }
 
-  if (storedToken.isExpired()) {
+  if (new Date() > storedToken.expiresAt) {
     throw new AppError('Refresh token has expired', 401);
   }
 
   return storedToken;
 };
 
-const revokeRefreshToken = async (tokenId: string): Promise<void> => {
+const revokeRefreshToken = async (refreshToken: string): Promise<void> => {
   await RefreshToken.findOneAndUpdate(
-    { token: tokenId },
+    { token: refreshToken },
     { revoked: true }
   );
 };
